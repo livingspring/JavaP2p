@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -35,15 +36,26 @@ public class Peer {
 
     // Method to handle an incoming connection from another peer
     private void handleConnection(Socket socket) {
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String message = in.readLine();
-            System.out.println("Received message: " + message);
-            in.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       try {
+        // Get the InetAddress of the connected peer
+        InetAddress peerAddress = socket.getInetAddress();
+        
+        // Get the port of the connected peer
+        int peerPort = socket.getPort();
+
+        // Read the message sent by the peer
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        String message = in.readLine();
+        
+        // Print the received message along with peer's IP address and port
+        System.out.println("Received message from " + peerAddress.getHostAddress() + ":" + peerPort + ": " + message);
+        
+        // Close the input stream and the socket
+        in.close();
+        socket.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
     // Method to send a message to another peer
