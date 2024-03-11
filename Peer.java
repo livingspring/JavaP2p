@@ -60,15 +60,31 @@ public class Peer {
         }
     }
 
+    // Method to interact with the peer via the command line
+    public void interact() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Type a message to send (type 'exit' to quit):");
+        try {
+            String message;
+            while (!(message = reader.readLine()).equals("exit")) {
+                System.out.println("Sending message: " + message);
+                // Assuming peer2's IP address and port are hardcoded for simplicity
+                sendMessage("localhost", 9090, message);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Main method to run the peer
     public static void main(String[] args) {
         // Create and start a peer on port 8080
         Peer peer = new Peer(8080);
         peer.start();
-
+        peer.interact();
         // Example: sending a message to another peer
         // Replace "localhost" and 9090 with the host and port of the target peer
         peer.sendMessage("localhost", 9090, "Hello from Peer 1");
     }
-    
+
 }

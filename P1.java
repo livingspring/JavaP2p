@@ -1,4 +1,4 @@
-public class Main {
+public class P1 {    
     public static void main(String[] args) {
         // Create and start Peer 1 on port 8080
         Peer peer1 = new Peer(8080);
@@ -16,6 +16,4 @@ public class Main {
         
         peer1.interact();
     }
-
-
 }
